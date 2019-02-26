@@ -51,3 +51,23 @@ help_me_case(Animal) ->
 	     _ -> "fgdadfgna"
 	   end,
     {Animal, "says " ++ Talk ++ "!"}.
+
+quicksort([]) -> [];
+quicksort([Pivot | Rest]) ->
+    {Smaller, Larger} = partition(Pivot, Rest, [], []),
+    quicksort(Smaller) ++ [Pivot] ++ quicksort(Larger).
+
+partition(_, [], Smaller, Larger) -> {Smaller, Larger};
+partition(Pivot, [H | T], Smaller, Larger) ->
+    if H =< Pivot ->
+	   partition(Pivot, T, [H | Smaller], Larger);
+       H > Pivot -> partition(Pivot, T, Smaller, [H | Larger])
+    end.
+
+len([]) -> 0;
+len([_ | T]) -> 1 + len(T).
+
+lenT(L) -> lenT(L, 0).
+
+lenT([], Acc) -> Acc;
+lenT([_ | T], Acc) -> lenT(T, Acc + 1).
