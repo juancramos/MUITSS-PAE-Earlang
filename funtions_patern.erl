@@ -5,13 +5,18 @@
 % 1
 ordinal(I) ->
     ORD = case I of
-	    1 -> "st";
-	    2 -> "nd";
-	    3 -> "rd";
-	    I when I > 3 -> "th";
+	    I when I =:= 1 -> "st";
+	    I when I =:= 2 -> "nd";
+	    I when I =:= 3 -> "rd";
+	    I when is_number(I), I > 3 -> "th";
 	    _ -> "not a number"
 	  end,
-    {I, "ordinal is " ++ integer_to_list(I) ++ ORD ++ "!"}.
+    {I,
+     "ordinal is " ++
+       if is_number(I) -> integer_to_list(I);
+	  true -> ""
+       end
+	 ++ ORD ++ "!"}.
 
 % 2
 same({X, X}) -> true;
