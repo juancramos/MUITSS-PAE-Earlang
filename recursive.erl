@@ -41,6 +41,21 @@ calc(X) -> X.
 % 5
 string(N) when is_number(N) -> integer_to_list(N);
 string(N) when is_atom(N) -> atom_to_list(N);
-string(N) when is_list(N) -> string:join([string(X) || X <- N] , ", ");
+string(N) when is_list(N) ->
+    string:join([string(X) || X <- N], ", ");
 string(N) when is_tuple(N) -> string(tuple_to_list(N));
 string(_) -> "*".
+
+bubble_sort(L) ->
+    case swapping(L) of
+      {NL, false} -> NL;
+      {NL, true} -> bubble_sort(NL)
+    end.
+
+swapping([H1, H2 | T]) when H1 > H2 ->
+    {NT, _} = swapping([H1 | T]), {[H2 | NT], true};
+swapping([H1, H2 | T]) when H1 =< H2 ->
+    {NT, Swapped} = swapping([H2 | T]),
+    {[H1 | NT], Swapped};
+swapping([H]) -> {[H], false};
+swapping([]) -> {[], false}.
