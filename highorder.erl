@@ -23,6 +23,10 @@ in_rank(X, Y, Z) ->
 	      end,
 	      Z).
 
+rank(Start, End, List) ->
+    lists:map(fun (E) -> Start =< E andalso E =< End end,
+	      List).
+
 % 3
 % first([1,a,{1,2},{2},[{3},4],"ba", []]) -> [1,2,{3},98]
 first(L) ->
