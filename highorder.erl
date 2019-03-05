@@ -33,8 +33,7 @@ first(L) ->
 		     end,
 		     L),
     lists:map(fun ([H | _]) -> H;
-		  ({H, _}) -> H;
-		  (H) -> H
+		  (T) -> element(1, T)
 	      end,
 	      F).
 
@@ -45,7 +44,8 @@ lk(Key, [_ | R]) -> lk(Key, R).
 % 4
 % keys([a,c],[{a,ok},{b,23},{d,"hi"}]) -> [ok,"hi"]
 keysFold(X, Y) ->
-    R = lists:foldl(fun (A, B) -> [lk(A, Y) | B] end, [], X),
+    R = lists:foldl(fun (A, B) -> [lk(A, Y) | B] end, [],
+		    X),
     lists:reverse(R).
 
 keysMap(X, Y) -> lists:map(fun (A) -> lk(A, Y) end, X).
