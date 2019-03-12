@@ -17,6 +17,8 @@ mysearchTr(E, L) ->
 			  R = mysearchTr1(E, X), io:format("~p~n", [R]), R
 		  end,
 		  L)
+    of
+      true -> true
     catch
       found -> true
     end.
