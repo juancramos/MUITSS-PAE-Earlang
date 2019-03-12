@@ -22,5 +22,9 @@ mysearchTr(E, L) ->
     end.
 
 mysearchTr1(E, E) -> throw(found);
-mysearchTr1(E, L) when is_list(L) -> mysearchTr(E, L);
+mysearchTr1(E, L) when is_list(L) ->
+    case mysearchTr(E, L) of
+      true -> throw(found);
+      _ -> false
+    end;
 mysearchTr1(_, _) -> false.
