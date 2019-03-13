@@ -104,10 +104,15 @@ set_address(DNI, Address, DB) ->
     end.
 
 name_warnings(BD) ->
-    dict:fold(fun (_, V, {A, B}) ->
-		      case lists:member(V, A) of
-			true -> {A, [V | B]};
-			false -> {[V | A], B}
-		      end
-	      end,
-	      {[], []}, BD).
+    {_, R} = dict:fold(fun (_, V = #person{}, {A, B}) ->
+			       case lists:member(V#person.name, A) of
+				 true ->
+				     case lists:member(V#person.name, B) of
+				       true -> {A, B};
+				       false -> {A, [V#person.name | B]}
+				     end;
+				 false -> {[V#person.name | A], B}
+			       end
+		       end,
+		       {[], []}, BD),
+    R.
